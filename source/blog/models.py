@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
+from slugify import slugify
 
 
 # Create your models here.
@@ -14,7 +15,7 @@ class Status(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False, verbose_name='Title')
-    slug = models.SlugField(max_length=250, null=False, unique=True)
+    slug = models.SlugField(default='', editable=False, max_length=200, null=False)
     author = models.ForeignKey(User, related_name='posts', on_delete=models.SET_DEFAULT, default=1,
                                verbose_name="Author")
     body = models.TextField(max_length=3000, null=False, blank=False, verbose_name="Content")
@@ -30,5 +31,12 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        return super(Post, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
-        return reverse("blog:post_detail", kwargs={"slug": self.slug})
+        return reverse("blog:post_detail", kwargs={
+            'pk': self.id,
+            'slug': self.slug,
+        })

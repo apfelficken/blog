@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-center">
+    <ul class="pagination">
+        {% if not page_obj.has_previous %}
+            <li class="page-item disabled">
+                <a class="page-link">&laquo; To begin</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link">Back</a>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page=1">&laquo; To begin</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link text-dark"
+                   href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">Back</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">
+                    {{ page_obj.previous_page_number }}
+                </a>
+            </li>
+        {% endif %}
+
+        <li class="page-item active text-secondary" aria-current="page">
+            <form method="get">
+                {% if search %}<input type="hidden" name="search" value="{{ search }}">{% endif %}
+                <input type="text" class="form-control" name="page" value="{{ page_obj.number }}">
+            </form>
+        </li>
+
+        {% if not page_obj.has_next %}
+            <li class="page-item disabled">
+                <a class="page-link">Next</a>
+            </li>
+
+            <li class="page-item disabled">
+                <a class="page-link">To the end &raquo;</a>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">
+                    {{ page_obj.next_page_number }}
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link text-dark"
+                   href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.paginator.num_pages }}">To the end
+                    &raquo;</a>
+
+            </li>
+        {% endif %}
+    </ul>
+</div>
