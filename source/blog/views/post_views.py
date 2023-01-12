@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
 from django.utils.http import urlencode
 from blog.forms import PostForm, SimpleSearchForm
-from blog.models import Post
+from blog.models import Post, Category
 from django.db.models import Q
 
 
@@ -35,6 +35,8 @@ class PostIndexView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['form'] = self.form
+        categories = Category.objects.all()
+        context['categories'] = categories
         if self.search_value:
             context['query'] = urlencode({'search': self.search_value})
             context['search'] = self.search_value

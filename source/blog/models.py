@@ -15,9 +15,19 @@ class Status(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False, verbose_name='Name')
+    slug = models.SlugField(default='', editable=False, max_length=200, null=False, unique=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super(Category, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("blog:category", kwargs={
+            'slug': self.slug,
+        })
 
 
 class Post(models.Model):
