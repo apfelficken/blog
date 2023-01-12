@@ -13,6 +13,13 @@ class Status(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=50, null=False, blank=False, verbose_name='Name')
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False, verbose_name='Title')
     slug = models.SlugField(default='', editable=False, max_length=200, null=False)
@@ -24,6 +31,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated at')
     status = models.ForeignKey('blog.Status', to_field='name', default='Draft', related_name='status',
                                on_delete=models.PROTECT, verbose_name='Status')
+    category = models.ManyToManyField('blog.Category', related_name='category', verbose_name='Category')
 
     class Meta:
         ordering = ('-publish',)
