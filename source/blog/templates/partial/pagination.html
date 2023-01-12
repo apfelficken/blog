@@ -9,14 +9,14 @@
             </li>
         {% else %}
             <li class="page-item">
-                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page=1">&laquo; To begin</a>
+                <a class="page-link border-secondary bg-light text-dark" href="?{% if query %}{{ query }}&{% endif %}page=1">&laquo; To begin</a>
             </li>
             <li class="page-item">
-                <a class="page-link text-dark"
+                <a class="page-link bg-light text-dark"
                    href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">Back</a>
             </li>
             <li class="page-item">
-                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">
+                <a class="page-link bg-light text-dark" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">
                     {{ page_obj.previous_page_number }}
                 </a>
             </li>
@@ -39,15 +39,15 @@
             </li>
         {% else %}
             <li class="page-item">
-                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">
+                <a class="page-link bg-light text-dark border-secondary" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">
                     {{ page_obj.next_page_number }}
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link text-dark" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+                <a class="page-link bg-light text-dark border-secondary" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
             </li>
             <li class="page-item">
-                <a class="page-link text-dark"
+                <a class="page-link bg-light text-dark border-secondary"
                    href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.paginator.num_pages }}">To the end
                     &raquo;</a>
 

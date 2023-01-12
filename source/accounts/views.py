@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView

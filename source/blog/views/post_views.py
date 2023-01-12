@@ -4,6 +4,8 @@ from django.utils.http import urlencode
 from blog.forms import PostForm, SimpleSearchForm
 from blog.models import Post, Category
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class PostIndexView(ListView):
@@ -49,33 +51,41 @@ class PostView(DetailView):
     context_object_name = 'post'
 
 
-class PostAddView(CreateView):
+class PostAddView(LoginRequiredMixin, CreateView):
     template_name = 'post/post_add.html'
     model = Post
     form_class = PostForm
     context_object_name = 'post'
 
     def form_valid(self, form):
-        user = self.request.user.pk
-        self.object = Post.objects.create(**form.cleaned_data)
-        self.object.user = user
-        return redirect(self.get_success_url())
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('blog:post_detail', kwargs={'slug': self.object.slug, 'pk': self.object.pk})
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(PermissionRequiredMixin, UpdateView):
     model = Post
     template_name = 'post/post_update.html'
     form_class = PostForm
     context_object_name = 'post'
+    permission_required = 'blog.change_post'
+
+    def has_permission(self):
+        return super().has_permission() or self.get_object().author == self.request.user
 
     def get_success_url(self):
         return reverse('blog:post_detail', kwargs={'slug': self.object.slug, 'pk': self.object.pk})
 
 
-class PostDeleteView(View):
+class PostDeleteView(PermissionRequiredMixin, View):
+    permission_required = 'blog.delete_post'
+
+    def has_permission(self):
+        project = get_object_or_404(Post, pk=self.kwargs.get('pk'))
+        return super().has_permission() or project.author == self.request.user
+
     def post(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
         post.delete()
