@@ -1,17 +1,17 @@
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete "{{ post.title }}"?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-footer">
-                    <form method="POST" action="{% url "blog:delete_post" post.pk %}" class="text-center">
-                        {% csrf_token %}
-                        <input class="btn btn-secondary" type="submit" value="Confirm">
-                        <a href="{{ post.get_absolute_url }}" class="btn btn-secondary">Cancel</a>
-                    </form>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Are you sure want to delete "{{ post.title }}"?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-footer">
+                <form method="POST" action="{% url "blog:delete_post" post.pk %}" class="text-center">
+                    {% csrf_token %}
+                    <input class="btn btn-secondary" type="submit" value="Confirm">
+                    <a href="{{ post.get_absolute_url }}" class="btn btn-secondary">Cancel</a>
+                </form>
             </div>
         </div>
     </div>
+</div>
