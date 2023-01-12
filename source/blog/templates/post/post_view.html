@@ -16,8 +16,7 @@
             <p>
                 <b>Categories:</b>
                 {% for category in post.category.all %}
-                    {{ category.name }}
-                    {% if not forloop.last %}, {% endif %}
+                    {{ category.name }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
         </div>
