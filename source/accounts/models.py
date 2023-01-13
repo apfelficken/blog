@@ -11,18 +11,13 @@ class Profile(models.Model):
     avatar = models.ImageField(null=True, blank=True, upload_to='user_avatar', verbose_name='Avatar')
     github = models.URLField(null=True, blank=True, verbose_name='GitHub')
     bio = models.TextField(null=True, blank=True, verbose_name='Bio')
-    slug = models.SlugField(default='', editable=False, max_length=200, null=False, unique=True)
 
     def __str__(self):
         return f"{self.user.username} 's Profile"
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.user.username)
-        return super(Profile, self).save(*args, **kwargs)
-
     def get_absolute_url(self):
         return reverse("accounts:detail", kwargs={
-            'id': self.user.pk,
+            'username': self.user.username,
         })
 
     class Meta:

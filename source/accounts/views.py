@@ -38,6 +38,7 @@ class UserDetailView(LoginRequiredMixin, DetailView, MultipleObjectMixin):
     template_name = 'user_detail.html'
     context_object_name = 'user_obj'
     paginate_by = 3
+    slug_field = 'username'
 
     def get_context_data(self, **kwargs):
         object_list = Post.objects.filter(author=self.get_object())
