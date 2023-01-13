@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from slugify import slugify
 
 
 class Profile(models.Model):
