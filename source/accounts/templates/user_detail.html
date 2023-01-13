@@ -21,23 +21,32 @@
             {% endif %}
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">{{ user_obj.username }}
-                        {% if user_obj.profile.github %}
-                            <a class="text-dark" href="{{ user_obj.profile.github }}"><i class="bi bi-github"></i></a>
-                        {% endif %}
-                    </h5>
-                        <p class="card-text">Name: {{ user_obj.first_name }}</p>
-                    <p class="card-text">Last name: {{ user_obj.last_name }}</p>
+                    <h3 class="card-title fw-bold">{{ user_obj.username }}</h3>
 
-                    {% if user_obj.profile.github %}
+                    <p class="card-text">
+                        {% if user_obj.first_name %}
+                            {{ user_obj.first_name }}
+                        {% endif %}
+                        {% if user_obj.last_name %}
+                            {{ user_obj.last_name }}
+                        {% endif %}
+                    </p>
+                    <p class="card-text">
+                        {% if user_obj.profile.bio %}
+                            {{ user_obj.profile.bio }}
+                        {% endif %}
+                    </p>
+                    {% if user_obj.profile.birth_date %}
                         <p class="card-text">Birth Date:
                             {{ user_obj.profile.birth_date }}
                         </p>
                     {% endif %}
+
                     <p class="card-text">Email: {{ user_obj.email }}</p>
-                    <p class="card-text">About:
+
+                    <p class="fs-4">
                         {% if user_obj.profile.github %}
-                            {{ user_obj.profile.bio }}
+                            <a class="text-dark" href="{{ user_obj.profile.github }}"><i class="bi bi-github"></i></a>
                         {% endif %}
                     </p>
                 </div>
