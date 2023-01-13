@@ -1,5 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django import forms
+from accounts.models import Profile
 
 
 class MyUserCreationForm(forms.ModelForm):
@@ -28,3 +30,16 @@ class MyUserCreationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password', 'password_confirm', 'first_name', 'last_name', 'email']
+
+
+class UserChangeForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['first_name', 'last_name', 'email']
+        labels = {'first_name': 'First name', 'last_name': 'Last name', 'email': 'Email'}
+
+
+class ProfileChangeForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar', 'bio', 'github']

@@ -1,5 +1,5 @@
 {% if not fields_only %}
-{% csrf_token %}
+    {% csrf_token %}
 {% endif %}
 
 {% for error in form.non_field_errors %}
@@ -8,7 +8,11 @@
 
 {% for field in form %}
     <div class="form-check">
-        <p><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
+        <p>
+            <label for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
+        </p>
         <p class="w-50">{{ field }}</p>
         {% for error in field.errors %}
             <p class="text-danger">{{ error }}</p>
