@@ -16,7 +16,12 @@
                     </button>
                 {% endif %}
             </h1>
-            <p>Published {{ post.publish }} by {{ post.author }}</p>
+            <p>
+                Published {{ post.publish }} by
+                <a class="text-secondary" href="{% url 'accounts:detail' post.author %}">
+                    {{ post.author }}
+                </a>
+            </p>
             <p>
                 <b>Categories:</b>
                 {% for category in post.category.all %}

@@ -10,7 +10,7 @@
                         <p>
                             Published {{ post.publish }}
                             by
-                            <a class="text-secondary" href="{{ post.author.get_absolute_url }}">
+                            <a class="text-secondary" href="{% url 'accounts:detail' post.author %}">
                                 {{ post.author }}
                             </a>
                         </p>
