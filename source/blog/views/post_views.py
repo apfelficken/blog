@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
 from django.utils.http import urlencode
+from django.views.generic.list import MultipleObjectMixin
+
 from blog.forms import PostForm, SimpleSearchForm
-from blog.models import Post, Category
+from blog.models import Post, Category, Comment
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -45,10 +47,15 @@ class PostIndexView(ListView):
         return context
 
 
-class PostView(DetailView):
+class PostView(DetailView, MultipleObjectMixin):
     template_name = 'post/post_view.html'
     model = Post
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        comments = Comment.objects.filter(post=self.get_object())
+        context = super(PostView, self).get_context_data(object_list=comments, **kwargs)
+        return context
 
 
 class PostAddView(LoginRequiredMixin, CreateView):
@@ -83,8 +90,8 @@ class PostDeleteView(PermissionRequiredMixin, View):
     permission_required = 'blog.delete_post'
 
     def has_permission(self):
-        project = get_object_or_404(Post, pk=self.kwargs.get('pk'))
-        return super().has_permission() or project.author == self.request.user
+        post = get_object_or_404(Post, pk=self.kwargs.get('pk'))
+        return super().has_permission() or post.author == self.request.user
 
     def post(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
