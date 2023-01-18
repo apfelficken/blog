@@ -16,7 +16,7 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse("accounts:detail", kwargs={
-            'username': self.user.username,
+            'slug': self.user.username,
         })
 
     class Meta:

@@ -17,8 +17,9 @@
                 {% endif %}
             </h1>
             <p>
-                Published {{ post.publish }} by
-                <a class="text-secondary" href="{% url 'accounts:detail' post.author %}">
+                Published {{ post.publish }}
+                by
+                <a class="text-secondary" href="{{ post.author.profile.get_absolute_url }}">
                     {{ post.author }}
                 </a>
             </p>
