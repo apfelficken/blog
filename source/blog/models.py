@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -58,3 +59,16 @@ class Post(models.Model):
             'pk': self.id,
             'slug': self.slug,
         })
+
+
+class Comment(models.Model):
+    text = models.TextField(max_length=400, verbose_name='Comment')
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments',
+                             verbose_name="Post")
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='comments',
+                               verbose_name="Author")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated at")
+
+    def __str__(self):
+        return f'{self.pk}. {self.text[:20]}'
